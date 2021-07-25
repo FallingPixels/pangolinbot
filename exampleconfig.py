@@ -1,7 +1,7 @@
 import configparser
 
 #API Tokens
-discord = 'NzM2ODM3NDQzNTI5MjExOTY2.Xx0nWA.hCfEk8kEZOIZ6MChyEvptIzZECM'
+discord = 'NzM2ODM3NDQzNTI5MjExOTY2.Xx0nWA.9qpBD5VPhLYTtHmLeB2Q3_tcZqs'
 twitch = 'oauth:t9s7fluv32dvabgje0kypyqlxjks4w'
 #Discord parameters
 burrow = 759743510626041866
