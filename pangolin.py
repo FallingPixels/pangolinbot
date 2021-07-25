@@ -9,43 +9,6 @@ from discord.ext import commands, tasks
 
 bot = commands.Bot(command_prefix='!')
 
-#===========MUSIC BOT SECTION====================================================
-@bot.command()
-async def play(ctx):
-    if ctx.message.content.strip() == '!play':
-        await summon()
-        return
-    query = ctx.message.content[5:]
-    request = jukebox.Request(query,ctx)
-    if request != None and request.error == 0:
-        await ctx.channel.send('Added ' + request.title)
-        await ctx.channel.send(request.link)
-    else:
-        await ctx.channel.send('An unkown error occured while adding a song.')
-@bot.command()
-async def summon(ctx):
-    channel = ctx.author.voice.channel
-    if channel == None:
-        await ctx.author.channel.send('You must be in a voice channel to summon me.')
-    else:
-        await bot.user.move_to(ctx.author.channel)
-@bot.command()
-async def playnow(ctx):
-    query = ctx.message.content[5:]
-    request = jukebox.Request(query,ctx,add_to_start=True)
-    if request != None and request.error == 0:
-        await ctx.channel.send('Added ' + request.title)
-        await ctx.channel.send(request.link)
-    else:
-        await ctx.channel.send('An unkown error occured while adding a song.')
-
-@bot.command()
-async def skipto(ctx,position):
-    await ctx.channel.send('Skipped to track ' + position)
-    
-#END MUSIC BOT SECTION
-
-
 #==================BOT EVENTS===================================================
 @bot.event
 async def on_ready():
