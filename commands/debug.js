@@ -10,7 +10,24 @@ module.exports = {
       command += args[i] + ' ';
     }
     command.trim();
-    message.reply('Ran:\n `' + command + '`');
-    eval(command);
+    try {
+      var output = eval(command);
+      if(output === undefined){
+        output = 'undefined';
+      }
+      if(output === null) {
+        output = 'null';
+      }
+      if(output === NaN) {
+        output = 'NaN';
+      }
+      if(typeof output === 'object') {
+        output = JSON.stringify(output);
+        output = output.substring(0,Math.min(output.length, 2000));
+      }
+      message.channel.send(output);
+    } catch (e) {
+      message.channel.send(e.message);
+    }
 	}
 };
