@@ -1,7 +1,8 @@
 global.XMLHttpRequest = require('xhr2');
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+global.admin_id = require('./config.json').admin_id;
+global.prefix = require('./config.json').prefix;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 var commandNames = [];
@@ -44,5 +45,4 @@ client.on('message', message => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
-console.log(process.env.DISCORD);
 client.login(process.env.DISCORD);
