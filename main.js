@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 global.admin_id = require('./config.json').admin_id;
 global.max_times = require('./config.json').max_times;
 global.prefix = require('./config.json').prefix;
+global.cache = {};
 global.client = new Discord.Client();
 client.commands = new Discord.Collection();
 const net = require('net');
@@ -35,7 +36,7 @@ client.once('ready', () => {
     }
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift().toLowerCase();
@@ -59,7 +60,12 @@ client.on('message', message => {
             args.pop();
             args.pop();
             for(var i = 0; i < num; i++){
-                client.commands.get(command).execute(message, args);
+                try {
+                    client.commands.get(command).execute(message, args);
+                }
+                catch(e){
+                    break;
+                }
             }
         }else {
             client.commands.get(command).execute(message, args);
