@@ -5,6 +5,15 @@ global.admin_id = require('./config.json').admin_id;
 global.prefix = require('./config.json').prefix;
 global.client = new Discord.Client();
 client.commands = new Discord.Collection();
+const net = require('net');
+const server = net.createServer((socket) => {
+  socket.end('goodbye\n');
+}).on('error', (err) => {
+  // Handle errors here.
+  throw err;
+});
+server.listen(process.env.PORT, '0.0.0.0');
+
 var commandNames = [];
 var helpString = '';
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
