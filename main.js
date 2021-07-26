@@ -7,11 +7,13 @@ client.commands = new Discord.Collection();
 var commandNames = [];
 var helpString = '';
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
     commandNames.push(command.name);
 }
+
 client.once('ready', () => {
 	console.log('Ready!');
     helpString = '\nList of Commands\n';
@@ -19,6 +21,7 @@ client.once('ready', () => {
         helpString += '`' + commandNames[i] + '` - ' + client.commands.get(commandNames[i]).description + '\n';
     }
 });
+
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -41,4 +44,4 @@ client.on('message', message => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
-client.login(token);
+client.login(process.env.DISCORD);
