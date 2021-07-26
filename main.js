@@ -44,4 +44,5 @@ client.on('message', message => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
+console.log(process.env.DISCORD);
 client.login(process.env.DISCORD);
