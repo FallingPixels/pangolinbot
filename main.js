@@ -2,6 +2,7 @@ global.XMLHttpRequest = require('xhr2');
 const fs = require('fs');
 const Discord = require('discord.js');
 global.admin_id = require('./config.json').admin_id;
+global.max_times = require('./config.json').max_times;
 global.prefix = require('./config.json').prefix;
 global.client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -23,6 +24,8 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
     commandNames.push(command.name);
 }
+
+commandNames.sort()
 
 client.once('ready', () => {
 	console.log('Ready!');
@@ -48,10 +51,23 @@ client.on('message', message => {
 	if (!client.commands.has(command)) return;
 
 	try {
-		client.commands.get(command).execute(message, args);
+        if(args[args.length - 2] === 'times' && !isNaN(args[args.length - 1])){
+            var num = parseInt(args[args.length - 1]);
+            if(message.author.id !== admin_id){
+                num = Math.min(max_times, num);
+            }
+            args.pop();
+            args.pop();
+            for(var i = 0; i < num; i++){
+                client.commands.get(command).execute(message, args);
+            }
+        }else {
+            client.commands.get(command).execute(message, args);
+        }
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
 });
+
 client.login(process.env.DISCORD);

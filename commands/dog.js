@@ -7,7 +7,7 @@ module.exports = {
 		xhr.responseType = 'json';
 		xhr.addEventListener('load',function(){
 			if(xhr.status === 200){
-				message.reply(xhr.response.message);
+				message.channel.send('',{files: [xhr.response.message]});
 			}
 		});
 		xhr.send();

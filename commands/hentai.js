@@ -16,14 +16,14 @@ module.exports = {
 			if(args[0].toLowerCase() === categories[i]) {
 				category = categories[i];
 				break;
-			} 
+			}
 		}
 		var xhr = new XMLHttpRequest();
         xhr.open('GET','https://api.waifu.pics/nsfw/' + category);
 		xhr.responseType = 'json';
 		xhr.addEventListener('load',function(){
 			if(xhr.status === 200){
-				message.reply(xhr.response.url);
+				message.channel.send('',{files: [xhr.response.url]});
 			}
 		});
 		xhr.send();

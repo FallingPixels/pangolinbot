@@ -34,7 +34,7 @@ module.exports = {
                             topPost = post;
                         }
                     }
-                    message.reply(topPost.file_url);
+                    message.channel.send('',{ files: [topPost.file_url] });
                 });
             }
         }

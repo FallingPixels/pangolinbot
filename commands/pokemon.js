@@ -13,12 +13,12 @@ module.exports = {
             var pokemon = xhr.response;
 
             var pokestring = 'Ditto\n';
-            pokestring += pokemon.sprites['other']['official-artwork']['front_default'];
+            var image = pokemon.sprites['other']['official-artwork']['front_default'];
             pokestring += '\nTypes: '
             for(var i = 0; i < pokemon.types.length; i++) {
                 pokestring += '`' + pokemon.types[i].type.name + '` ';
             }
-            message.reply(pokestring);   
+            message.reply(pokestring, {files: [image]});
 		});
 		xhr.send();
 	},
